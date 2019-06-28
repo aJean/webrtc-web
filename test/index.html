@@ -1,66 +1,20 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
   <title>Realtime communication with WebRTC</title>
-
   <link rel="stylesheet" href="css/main.css" />
-
 </head>
 
 <body>
-
   <h1>Realtime communication with WebRTC</h1>
-  <script>
-    const offerOptions = {
-      offerToReceiveVideo: 1
-    };
-
-    // 如果不立即收集并建立 jsep，会拿到所有的 candidate
-    // 包括 udp(host)、tcp(host)、srflx(stun)、relay(turn)
-    // 所以收集到一个 candidate 就交换
-    navigator.mediaDevices.getUserMedia({
-      video: true,
-    }).then(function (stream) {
-      console.log(stream.getVideoTracks())
-      const localPeer = new RTCPeerConnection(null)
-      const remotePeer = new RTCPeerConnection(null)
-
-      localPeer.addEventListener('icecandidate', function (event) {
-        if (event.candidate) {
-          const iceCandidate = new RTCIceCandidate(event.candidate)
-          remotePeer.addIceCandidate(iceCandidate)
-          console.log('local', event.candidate)
-        }
-      })
-
-      remotePeer.addEventListener('icecandidate', function (event) {
-        if (event.candidate) {
-          const iceCandidate = new RTCIceCandidate(event.candidate)
-          localPeer.addIceCandidate(iceCandidate)
-          console.log('remote', event.candidate)
-        }
-      })
-
-      remotePeer.addEventListener('addstream', function (event) {
-        const mediaStream = event.stream
-      });
-
-      // localPeer.addStream(stream);
-
-      localPeer.createOffer(offerOptions).then(function (odes) {
-        localPeer.setLocalDescription(odes)
-        remotePeer.setRemoteDescription(odes)
-
-        remotePeer.createAnswer().then(function (ades) {
-          localPeer.setRemoteDescription(ades)
-          remotePeer.setLocalDescription(ades)
-        })
-      })
-
-    })
-  </script>
+  <section class="video-view">
+    <video id="local-v" autoplay playsinline></video>
+    <video id="remote-v" autoplay playsinline></video>
+  </section>
+  <section class="video-control">
+    <button id="rtc-conn">connect</button>
+  </section>
+  <script src="../lib/socket.js"></script>
+  <script src="./remote.js"></script>
 </body>
-
 </html>

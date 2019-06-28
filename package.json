@@ -1,0 +1,26 @@
+{
+  "name": "webrtc-web",
+  "version": "1.0.0",
+  "description": "webrtc",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aJean/webrtc-web.git"
+  },
+  "author": "aJean",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aJean/webrtc-web/issues"
+  },
+  "homepage": "https://github.com/aJean/webrtc-web#readme",
+  "dependencies": {
+    "node-static": "^0.7.11",
+    "socket.io": "^2.2.0"
+  }
+}
